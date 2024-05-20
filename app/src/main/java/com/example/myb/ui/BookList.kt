@@ -4,6 +4,7 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
+import androidx.compose.foundation.lazy.itemsIndexed
 import androidx.compose.material3.Divider
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.FloatingActionButton
@@ -22,11 +23,12 @@ import com.example.myb.model.Book
 
 import com.example.myb.viewmodel.BookViewModel
 
+
 @Composable
-fun BookList(books: List<Book>) {
+fun BookList(books: List<Book>, onEditClick: (Int) -> Unit) {
     LazyColumn {
-        items(books) { book ->
-            BookListItem(book = book)
+        itemsIndexed(books) { index, book ->
+            BookListItem(book = book, bookId = index, onEditClick = onEditClick)
             Divider(color = Color.Gray, thickness = 1.dp)
         }
     }

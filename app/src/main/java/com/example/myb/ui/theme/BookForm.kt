@@ -23,52 +23,52 @@ import androidx.navigation.NavHostController
 import com.example.myb.viewmodel.BookViewModel
 
 
-@OptIn(ExperimentalMaterial3Api::class)
-@Composable
-fun BookForm(navController: NavHostController, bookViewModel: BookViewModel) {
-    var title by remember { mutableStateOf(TextFieldValue(bookViewModel.selectedBook?.title ?: "")) }
-    var author by remember { mutableStateOf(TextFieldValue(bookViewModel.selectedBook?.author ?: "")) }
-    var year by remember { mutableStateOf(TextFieldValue(bookViewModel.selectedBook?.year?.toString() ?: "")) }
-    var isbn by remember { mutableStateOf(TextFieldValue(bookViewModel.selectedBook?.isbn ?: "")) }
-
-    Scaffold(
-        topBar = { TopAppBar(title = { Text(text = "Neues Buch anlegen/bearbeiten") }) }
-    ) { paddingValues ->
-        Column(modifier = Modifier.padding(paddingValues).padding(16.dp)) {
-            OutlinedTextField(
-                value = title,
-                onValueChange = { title = it },
-                label = { Text("Title") },
-                modifier = Modifier.fillMaxWidth().padding(vertical = 8.dp)
-            )
-            OutlinedTextField(
-                value = author,
-                onValueChange = { author = it },
-                label = { Text("Author") },
-                modifier = Modifier.fillMaxWidth().padding(vertical = 8.dp)
-            )
-            OutlinedTextField(
-                value = year,
-                onValueChange = { year = it },
-                label = { Text("Year") },
-                modifier = Modifier.fillMaxWidth().padding(vertical = 8.dp)
-            )
-            OutlinedTextField(
-                value = isbn,
-                onValueChange = { isbn = it },
-                label = { Text("ISBN") },
-                modifier = Modifier.fillMaxWidth().padding(vertical = 8.dp)
-            )
-
-            Button(
-                onClick = {
-                    bookViewModel.saveBook(title.text, author.text, year.text.toIntOrNull(), isbn.text)
-                    navController.popBackStack()
-                },
-                modifier = Modifier.align(Alignment.End).padding(vertical = 8.dp)
-            ) {
-                Text("Save")
-            }
-        }
-    }
-}
+//@OptIn(ExperimentalMaterial3Api::class)
+//@Composable
+//fun BookForm(navController: NavHostController, bookViewModel: BookViewModel) {
+//    var title by remember { mutableStateOf(TextFieldValue(bookViewModel.selectedBook?.title ?: "")) }
+//    var author by remember { mutableStateOf(TextFieldValue(bookViewModel.selectedBook?.author ?: "")) }
+//    var year by remember { mutableStateOf(TextFieldValue(bookViewModel.selectedBook?.year?.toString() ?: "")) }
+//    var isbn by remember { mutableStateOf(TextFieldValue(bookViewModel.selectedBook?.isbn ?: "")) }
+//
+//    Scaffold(
+//        topBar = { TopAppBar(title = { Text(text = "Neues Buch anlegen/bearbeiten") }) }
+//    ) { paddingValues ->
+//        Column(modifier = Modifier.padding(paddingValues).padding(16.dp)) {
+//            OutlinedTextField(
+//                value = title,
+//                onValueChange = { title = it },
+//                label = { Text("Title") },
+//                modifier = Modifier.fillMaxWidth().padding(vertical = 8.dp)
+//            )
+//            OutlinedTextField(
+//                value = author,
+//                onValueChange = { author = it },
+//                label = { Text("Author") },
+//                modifier = Modifier.fillMaxWidth().padding(vertical = 8.dp)
+//            )
+//            OutlinedTextField(
+//                value = year,
+//                onValueChange = { year = it },
+//                label = { Text("Year") },
+//                modifier = Modifier.fillMaxWidth().padding(vertical = 8.dp)
+//            )
+//            OutlinedTextField(
+//                value = isbn,
+//                onValueChange = { isbn = it },
+//                label = { Text("ISBN") },
+//                modifier = Modifier.fillMaxWidth().padding(vertical = 8.dp)
+//            )
+//
+//            Button(
+//                onClick = {
+//                    bookViewModel.saveBook(title.text, author.text, year.text.toIntOrNull(), isbn.text)
+//                    navController.popBackStack()
+//                },
+//                modifier = Modifier.align(Alignment.End).padding(vertical = 8.dp)
+//            ) {
+//                Text("Save")
+//            }
+//        }
+//    }
+//}

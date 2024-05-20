@@ -26,7 +26,7 @@ import androidx.compose.ui.unit.sp
 import com.example.myb.model.Book
 
 @Composable
-fun BookListItem(book: Book) {
+fun BookListItem(book: Book, bookId: Int, onEditClick: (Int) -> Unit) {
     var expanded by remember { mutableStateOf(false) }
 
     Column(modifier = Modifier.padding(16.dp)) {
@@ -40,6 +40,9 @@ fun BookListItem(book: Book) {
                     imageVector = if (expanded) Icons.Default.ArrowDropDown else Icons.Default.ArrowDropDown,
                     contentDescription = "Expand/Collapse"
                 )
+            }
+            IconButton(onClick = { onEditClick(bookId) }) {
+                Icon(Icons.Default.Edit, contentDescription = "Edit")
             }
         }
         if (expanded) {
