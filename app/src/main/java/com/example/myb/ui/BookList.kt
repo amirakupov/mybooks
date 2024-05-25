@@ -25,10 +25,15 @@ import com.example.myb.viewmodel.BookViewModel
 
 
 @Composable
-fun BookList(books: List<Book>, onEditClick: (Int) -> Unit) {
+fun BookList(
+    books: List<Book>,
+    onEditClick: (Int) -> Unit,
+    onDeleteClick: (Int) -> Unit,
+    onToggleReadStatus: (Int) -> Unit
+) {
     LazyColumn {
         itemsIndexed(books) { index, book ->
-            BookListItem(book = book, bookId = index, onEditClick = onEditClick)
+            BookListItem(book = book, bookId = index, onEditClick = onEditClick, onDeleteClick = onDeleteClick, onToggleReadStatus = onToggleReadStatus)
             Divider(color = Color.Gray, thickness = 1.dp)
         }
     }

@@ -9,6 +9,7 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowDropDown
 import androidx.compose.material.icons.filled.Delete
 import androidx.compose.material.icons.filled.Edit
+import androidx.compose.material3.Checkbox
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.Text
@@ -26,7 +27,13 @@ import androidx.compose.ui.unit.sp
 import com.example.myb.model.Book
 
 @Composable
-fun BookListItem(book: Book, bookId: Int, onEditClick: (Int) -> Unit) {
+fun BookListItem(
+    book: Book,
+    bookId: Int,
+    onEditClick: (Int) -> Unit,
+    onDeleteClick: (Int) -> Unit,
+    onToggleReadStatus: (Int) -> Unit
+) {
     var expanded by remember { mutableStateOf(false) }
 
     Column(modifier = Modifier.padding(16.dp)) {
@@ -44,6 +51,13 @@ fun BookListItem(book: Book, bookId: Int, onEditClick: (Int) -> Unit) {
             IconButton(onClick = { onEditClick(bookId) }) {
                 Icon(Icons.Default.Edit, contentDescription = "Edit")
             }
+            IconButton(onClick = { onDeleteClick(bookId) }) {
+                Icon(Icons.Default.Delete, contentDescription = "Delete")
+            }
+            Checkbox(
+                checked = book.isRead,
+                onCheckedChange = { onToggleReadStatus(bookId) }
+            )
         }
         if (expanded) {
             BookDetails(book = book)

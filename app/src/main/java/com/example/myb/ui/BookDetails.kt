@@ -10,11 +10,15 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.myb.model.Book
-
 @Composable
 fun BookDetails(book: Book) {
     Column(modifier = Modifier.padding(start = 16.dp)) {
         Text(text = "Year: ${book.year}", style = TextStyle(fontSize = 16.sp, fontWeight = FontWeight.Normal))
         Text(text = "ISBN: ${book.isbn}", style = TextStyle(fontSize = 16.sp, fontWeight = FontWeight.Normal))
     }
+}
+
+enum class SortOrder {
+    ASCENDING,
+    DESCENDING
 }
