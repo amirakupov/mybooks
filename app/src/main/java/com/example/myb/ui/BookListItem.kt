@@ -29,10 +29,9 @@ import com.example.myb.model.Book
 @Composable
 fun BookListItem(
     book: Book,
-    bookId: Int,
-    onEditClick: (Int) -> Unit,
-    onDeleteClick: (Int) -> Unit,
-    onToggleReadStatus: (Int) -> Unit
+    onEditClick: () -> Unit,
+    onDeleteClick: () -> Unit,
+    onToggleReadStatus: () -> Unit
 ) {
     var expanded by remember { mutableStateOf(false) }
 
@@ -48,15 +47,15 @@ fun BookListItem(
                     contentDescription = "Expand/Collapse"
                 )
             }
-            IconButton(onClick = { onEditClick(bookId) }) {
+            IconButton(onClick = onEditClick) {
                 Icon(Icons.Default.Edit, contentDescription = "Edit")
             }
-            IconButton(onClick = { onDeleteClick(bookId) }) {
+            IconButton(onClick = onDeleteClick) {
                 Icon(Icons.Default.Delete, contentDescription = "Delete")
             }
             Checkbox(
                 checked = book.isRead,
-                onCheckedChange = { onToggleReadStatus(bookId) }
+                onCheckedChange = { onToggleReadStatus() }
             )
         }
         if (expanded) {

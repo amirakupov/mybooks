@@ -62,15 +62,17 @@ class EditBookViewModel(private val bookViewModel: BookViewModel, private val bo
                 !isValidISBN(_isbn.value) -> "ISBN ist ungültig"
                 else -> {
                     val newBook = Book(
+                        id = if (bookId == -1) 0 else bookId,
                         title = _title.value,
                         author = _author.value,
                         year = _year.value.toIntOrNull() ?: 0,
-                        isbn = _isbn.value
+                        isbn = _isbn.value,
+                        isRead = false
                     )
                     if (bookId == -1) {
                         bookViewModel.addBook(newBook)
                     } else {
-                        bookViewModel.updateBook(bookId, newBook)
+                        bookViewModel.updateBook(newBook)
                     }
                     navController.navigateUp()
                     ""

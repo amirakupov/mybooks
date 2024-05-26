@@ -28,12 +28,17 @@ import com.example.myb.viewmodel.BookViewModel
 fun BookList(
     books: List<Book>,
     onEditClick: (Int) -> Unit,
-    onDeleteClick: (Int) -> Unit,
-    onToggleReadStatus: (Int) -> Unit
+    onDeleteClick: (Book) -> Unit,
+    onToggleReadStatus: (Book) -> Unit
 ) {
     LazyColumn {
         itemsIndexed(books) { index, book ->
-            BookListItem(book = book, bookId = index, onEditClick = onEditClick, onDeleteClick = onDeleteClick, onToggleReadStatus = onToggleReadStatus)
+            BookListItem(
+                book = book,
+                onEditClick = { onEditClick(book.id) },
+                onDeleteClick = { onDeleteClick(book) },
+                onToggleReadStatus = { onToggleReadStatus(book) }
+            )
             Divider(color = Color.Gray, thickness = 1.dp)
         }
     }

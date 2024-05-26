@@ -25,6 +25,7 @@ import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.produceState
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
@@ -33,6 +34,7 @@ import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
 import com.example.myb.model.Book
 import com.example.myb.viewmodel.BookViewModel
+import kotlinx.coroutines.flow.collectLatest
 
 
 @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
@@ -42,13 +44,12 @@ fun BookListScreen(navController: NavHostController, bookViewModel: BookViewMode
     var searchQuery by remember { mutableStateOf("") }
     var sortOrder by remember { mutableStateOf(SortOrder.ASCENDING) }
     val books by bookViewModel.books.collectAsState()
-    var filteredBooks by remember { mutableStateOf(books) }
-
-    LaunchedEffect(books, searchQuery, sortOrder) {
-        filteredBooks = bookViewModel.filterBooks(searchQuery)
-        filteredBooks = when (sortOrder) {
-            SortOrder.ASCENDING -> filteredBooks.sortedBy { it.year }
-            SortOrder.DESCENDING -> filteredBooks.sortedByDescending { it.year }
+    val filteredBooks by produceState<List<Book>>(initialValue = emptyList(), searchQuery, sortOrder) {
+        bookViewModel.filterBooks(searchQuery).collectLatest { bookList ->
+            value = when (sortOrder) {
+                SortOrder.ASCENDING -> bookList.sortedBy { it.year }
+                SortOrder.DESCENDING -> bookList.sortedByDescending { it.year }
+            }
         }
     }
 
@@ -97,8 +98,8 @@ fun BookListScreen(navController: NavHostController, bookViewModel: BookViewMode
                 BookList(
                     books = filteredBooks,
                     onEditClick = { bookId -> navController.navigate("edit_book/$bookId") },
-                    onDeleteClick = { bookId -> bookViewModel.deleteBook(bookId) },
-                    onToggleReadStatus = { bookId -> bookViewModel.toggleReadStatus(bookId) }
+                    onDeleteClick = { book -> bookViewModel.deleteBook(book) },
+                    onToggleReadStatus = { book -> bookViewModel.toggleReadStatus(book.id) }
                 )
             }
         }
