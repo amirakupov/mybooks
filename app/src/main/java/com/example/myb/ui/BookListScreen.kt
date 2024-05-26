@@ -2,6 +2,7 @@ package com.example.myb.ui
 
 import android.annotation.SuppressLint
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
@@ -28,6 +29,7 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.produceState
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
@@ -95,12 +97,21 @@ fun BookListScreen(navController: NavHostController, bookViewModel: BookViewMode
                     }
                 }
                 Spacer(modifier = Modifier.height(16.dp))
-                BookList(
-                    books = filteredBooks,
-                    onEditClick = { bookId -> navController.navigate("edit_book/$bookId") },
-                    onDeleteClick = { book -> bookViewModel.deleteBook(book) },
-                    onToggleReadStatus = { book -> bookViewModel.toggleReadStatus(book.id) }
-                )
+                if (filteredBooks.isEmpty()) {
+                    Box(
+                        modifier = Modifier.fillMaxSize(),
+                        contentAlignment = Alignment.Center
+                    ) {
+                        Text("Es wurden noch keine Bücher angelegt")
+                    }
+                } else {
+                    BookList(
+                        books = filteredBooks,
+                        onEditClick = { bookId -> navController.navigate("edit_book/$bookId") },
+                        onDeleteClick = { book -> bookViewModel.deleteBook(book) },
+                        onToggleReadStatus = { book -> bookViewModel.toggleReadStatus(book.id) }
+                    )
+                }
             }
         }
     )
